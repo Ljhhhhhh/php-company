@@ -1,0 +1,38 @@
+{extend name='common'/}
+{block name='css'}
+{/block}
+{block name='content'}
+<div class="row">
+    <div class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a href="/">首页</a></li>
+            <li><a href="javascript:''" onclick="history.go(-1)">资讯中心</a></li>
+            <li class="active">{$info.title|mb_substr=0,7,'utf-8'}</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h1 class="info_title">{$info.title}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <p class="info_abstract">摘要：{$info.abstract}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 info_more">
+        <span class="col-xs-6 col-md-3">来源：{$info.source}</span>
+        <span class="col-xs-6 col-md-3">发布时间：{$info.update_time|date='Y-m-d',###}</span>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-12 info_content">
+        {$info.content}
+    </div>
+</div>
+{/block}
+{block name='js'}
+{/block}

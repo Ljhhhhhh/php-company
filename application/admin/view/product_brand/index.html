@@ -1,0 +1,53 @@
+{include file='header,menu'}
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span>
+        品牌管理
+        <span class="c-gray en">&gt;</span>
+        品牌列表
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+				<span class="l">
+				<!--<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>-->
+				<a class="btn btn-primary radius" data-title="添加资讯" href="{:url('productBrand/add')}"><i class="Hui-iconfont">&#xe600;</i> 添加品牌</a>
+				</span>
+                <span class="r">共有品牌：<strong>{$count}</strong> 条</span>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-bg table-hover table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <!--<th width="25"><input type="checkbox" name="" value=""></th>-->
+                        <th width="80">ID</th>
+                        <th width="120">品牌名称</th>
+                        <th width="120">品牌英文名称</th>
+                        <th width="80">品牌LOGO</th>
+                        <th width="80">描述</th>
+                        <th width="120">修改</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name='brandList' id='vo'}
+                    <tr class="text-c">
+                        <td>{$vo.brand_id}</td>
+                        <td class="text-l">{$vo.brand_name}</td>
+                        <td class="text-l">{$vo.brand_name_en}</td>
+                        <td class="brand_list_img"><img src="/uploads/{$vo.brand_logo}" alt=""></td>
+                        <td>{$vo.brand_describe}</td>
+                        <td class="f-14 td-manage">
+                            <a href="{:url('productBrand/edit',['id'=>$vo.brand_id])}" style="text-decoration:none" class="ml-5"  title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a></td>
+                    </tr>
+                    {/volist}
+
+                    </tbody>
+                </table>
+            </div>
+        </article>
+        {$brandList->render()}
+    </div>
+</section>
+{include file='footer'}

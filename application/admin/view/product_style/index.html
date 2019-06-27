@@ -1,0 +1,114 @@
+{include file='header,menu'}
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span>
+        风格管理
+        <span class="c-gray en">&gt;</span>
+        风格列表
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+				<span class="l">
+				<!--<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>-->
+				<a class="btn btn-primary radius" data-title="添加资讯" id="add"><i class="Hui-iconfont">&#xe600;</i> 添加风格</a>
+				</span>
+                <span class="r">共有风格：<strong>{$count}</strong> 条</span>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-bg table-hover table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <!--<th width="25"><input type="checkbox" name="" value=""></th>-->
+                        <th width="80">ID</th>
+                        <th width="120">风格</th>
+                        <th width="80">首页展示</th>
+                        <th width="80">修改</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name='styleList' id='vo'}
+                    <tr class="text-c">
+                        <td>{$vo.product_style_id}</td>
+                        <td class="text-l"><u style="cursor:pointer" class="text-primary" title="查看">{$vo.product_style_name}</u></td>
+                        <td class="td-status"><a href="{:url('productStyle/status',['id'=>$vo.product_style_id])}">
+                            {$vo.product_style_status|styleStatus}</a></td>
+                        <td class="f-14 td-manage">
+                            <a href="{:url('productStyle/edit',['id'=>$vo.product_style_id])}" style="text-decoration:none" class="ml-5" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a></td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+        {$styleList->render()}
+    </div>
+</section>
+<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">添加风格</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>风格：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" class="input-text" value="" placeholder="" name="product_style_name">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-4"><span class="c-red">*</span>首页展示：</label>
+                    <div class="formControls col-xs-8 col-sm-8">
+                        <div class="radio-box">
+                            <input type="radio" id="radio-1" name="product_style_status" value=1>
+                            <label for="radio-1">是</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="radio-2" name="product_style_status" checked value=0>
+                            <label for="radio-2">否</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="add_btn">添加</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+{include file='footer'}
+<script>
+    $("#add").click(function (e) {
+        e.preventDefault();
+        $("#modal-demo").modal("show");
+    })
+    $("#add_btn").click(function (e) {
+        e.preventDefault();
+        var product_style_name=$("#modal-demo").find("input[name='product_style_name']").val();
+        var product_style_status=$("#modal-demo").find("input:radio:checked").val();
+        var data= {
+            'product_style_name': product_style_name,
+            'product_style_status': product_style_status
+        }
+        $.ajax({
+            type:"post",
+            url:"{:url('productStyle/add')}",
+            data:data,
+            dataType:'json',
+            success:function (e) {
+                if(e){
+                    $("#modal-demo").modal("hide");
+                    window.location.reload();
+                }else {
+                    $("#modal-demo").modal("hide");
+                    alert('添加失败，请重新添加');
+                }
+            }
+        })
+    });
+</script>

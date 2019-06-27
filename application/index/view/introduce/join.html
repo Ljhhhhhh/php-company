@@ -1,0 +1,79 @@
+{extend name='common'/}
+{block name='css'}
+{/block}
+{block name='banner'}
+<div class="container-fluid intro_banner">
+    <div class="row">
+        <div class="col-xs-12">
+            <img src="/static/images/banner4.jpg" alt="">
+        </div>
+    </div>
+</div>
+{/block}
+{block name='content'}
+<div class="row">
+    <div class="col-xs-12 intro_content">
+        {$join.content}
+    </div>
+</div>
+<form class="form-horizontal" id="join_form">
+    <div class="form-group col-sm-6 col-xs-12">
+        <label class="col-md-3 col-sm-4 col-xs-12"><span class="text-danger">*</span>姓名：</label>
+        <div class="col-sm-8 col-xs-12">
+            <input type="text" class="form-control" placeholder="姓名" name="name">
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-xs-12">
+        <label class="col-md-3 col-sm-4 col-xs-12"><span class="text-danger">*</span>手机：</label>
+        <div class="col-sm-8 col-xs-12">
+            <input type="number" class="form-control" placeholder="手机号码" name="mobile">
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-xs-12">
+        <label class="col-md-3 col-sm-4 col-xs-12">邮箱：</label>
+        <div class="col-sm-8 col-xs-12">
+            <input type="email" class="form-control" placeholder="邮箱地址" name="email">
+        </div>
+    </div>
+    <div class="form-group col-xs-12">
+        <label class="col-xs-12">申请：</label>
+        <div class="col-xs-12">
+            <textarea class="form-control" rows="3" placeholder="申请内容" name="content"></textarea>
+        </div>
+    </div>
+    <div class="form-group col-xs-12">
+        <button type="submit" id="join_btn" class="btn btn-default">提交申请</button>
+    </div>
+</form>
+{/block}
+{block name='js'}
+<script>
+    $(function () {
+        $("#join_btn").click(function (e) {
+            e.preventDefault();
+            var modal_content=$('#mymodel').find('.modal-content').find('.modal-body');
+            new serviceForm({
+                obj:'#join_form',
+                url:"{:url('introduce/add')}",
+                name:'name',
+                name_verify:true,
+                mobile:'mobile',
+                email:'email',
+                content:'content',
+                hint:function (mes) {
+                    modal_content.html(mes);
+                    $('#mymodel').modal();
+                },
+                success:function (e) {
+                    if(e){
+                        modal_content.html("申请已成功，工作人员将会尽快与您取得联系！");
+                    }else{
+                        modal_content.html("申请失败，请重试！");
+                    };
+                    $('#mymodel').modal();
+                }
+            })
+        })
+    });
+</script>
+{/block}

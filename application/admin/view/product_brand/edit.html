@@ -1,0 +1,67 @@
+{include file='header,menu'}
+<article class="page-container">
+    <form class="form form-horizontal" id="form-article-add" action="{:url('productBrand/doEdit')}" method="post" enctype='multipart/form-data'>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$brand.brand_name}" placeholder="" name="brand_name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌英文名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$brand.brand_name_en}" placeholder="" name="brand_name_en">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌LOGO：</label>
+            <div class="formControls col-xs-8 col-sm-9" id="uploadForm">
+                <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload">
+                    <div class="fileinput-new thumbnail" style="width: 200px;height: auto;max-height:150px;">
+                        <img id='picImg' style="width: 100%;height: auto;max-height: 140px;" src="/uploads/{$brand.brand_logo}" alt=""/>
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                    <div>
+                        <span class="btn btn-primary radius btn-file">
+                            <span class="fileinput-new">选择文件</span>
+                            <span class="fileinput-exists">换一张</span>
+                            <input type="file" value="{$brand.brand_logo}" name="brand_logo" id="picID" accept="image/gif,image/jpeg,image/x-png"/>
+                        </span>
+                        <a href="javascript:;" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">移除</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌描述：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea name="brand_describe" id="editor" type="text/plain" style="width:100%;height:400px;">{$brand.brand_describe}</textarea>
+            </div>
+        </div>
+        <input type="hidden" name="brand_id" value="{$brand_id}">
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <button class="btn btn-primary radius" type="submit" id="bbb"><i class="Hui-iconfont">&#xe632;</i> 更新</button>
+                <a class="btn btn-default radius" type="button" href="{:url('productBrand/index')}">&nbsp;&nbsp;取消&nbsp;&nbsp;</a>
+
+            </div>
+        </div>
+    </form>
+</article>
+{include file='footer'}
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="/lib/fileinput/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/lib/fileinput/js/bootstrap-fileinput.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var ue = UE.getEditor('editor');
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->

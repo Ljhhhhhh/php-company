@@ -1,0 +1,67 @@
+{extend name='common'/}
+{block name='css'}
+{/block}
+{block name='content'}
+<div class="row">
+    <div class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a href="/">首页</a></li>
+            <li><a href="javascript:''" onclick="history.go(-1)">产品页</a></li>
+            <li class="active">{$product.product_name|mb_substr=0,7,'utf-8'}</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h1 class="ps_title">{$product.product_name}</h1>
+    </div>
+</div>
+<div class="row" id="ps-big_img">
+    <div class="col-xs-12 col-md-8" >
+        <img src="/uploads/{$product['images'][0]['src']}" alt="" class="ps_big">
+        <div id="small_img">
+            <img class="control left_control" src="/static/images/left.png" data-val="-1">
+            <ul>
+                {volist name='$product["images"]' id='vo'}
+                <li><img src="/uploads/{$vo['src']}" alt=""></li>
+                {/volist}
+            </ul>
+            <img src="/static/images/right.png" class="control right_control" data-val="1">
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-4">
+            <h4 class="text-primary">
+                {if condition="$product.discount lt 1"}<s>{/if}
+                价格：￥{$product.price}
+                {if condition="$product.discount lt 1"}</s>{/if}
+            </h4>
+                {if condition="$product.discount lt 1"}
+                <h3 class="text-danger">限时抢购：￥{$product.price*$product.discount}</h3>
+                {/if}
+        <hr>
+        <table class="table table-condensed table-striped table-condensed table-bordered">
+            <tr><th scope="row">产品货号</th><td>{$product.no}</td></tr>
+            <tr><th>品牌</th><td>{$product.brand_name}</td></tr>
+            <tr><th>风格</th><td>{$product.product_style_name}</td></tr>
+            <tr><th>季节</th><td>{$product.season}</td></tr>
+            <tr><th>适用群体</th><td>{$product.target}</td></tr>
+            <tr><th>颜色</th><td>{$product.color}</td></tr>
+            <tr><th>主材</th><td>{$product.materials}</td></tr>
+            <tr><th>款式</th><td>{$product.design}</td></tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 capion">
+        <h4 class="bg-info"><span></span>通知：本平台暂未开通线上支付，如有需要，您可联系我们进行交易！</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 ps_content">
+        {$product.content}
+    </div>
+</div>
+{/block}
+{block name='js'}
+<script src="/static/js/productshow.js"></script>
+{/block}

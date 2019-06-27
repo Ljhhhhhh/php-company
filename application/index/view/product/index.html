@@ -1,0 +1,32 @@
+{extend name='common'/}
+{block name='css'}
+{/block}
+{block name='content'}
+<ul class="nav nav-pills" id="p-tabs">
+    <li role="presentation"><a href="{:url('/product_all')}">全部</a></li>
+    <li role="presentation"><a href="{:url('/product_recommend')}"><span class="glyphicon glyphicon-thumbs-up text-danger"></span>&nbsp;厂家推荐</a></li>
+    <li role="presentation"><a href="{:url('/product_discount')}"><span class="glyphicon glyphicon-flash text-danger"></span>&nbsp;限时折扣</a></li>
+    {volist name='$style' id='vo'}
+    <li role="presentation"><a href="{:url('/product_style',['id'=>$vo.product_style_id])}">{$vo.product_style_name}</a></li>
+    {/volist}
+</ul>
+<div class="row i-products" id="p-products">
+    {volist name='$product' id='pro'}
+    <a class="col-md-3 col-xs-6 i-product" href="{:url('/product_show',['id'=>$pro.id])}">
+        <div class="i-product_img"><img data-original="/uploads/{$pro.picture}" alt="{$pro.product_name}"></div>
+        <h4 class="text-info">
+            {if condition="$pro.discount lt 1"}<s>{/if}
+            ￥{$pro.price}
+            {if condition="$pro.discount lt 1"}</s>{/if}
+            {if condition="$pro.discount lt 1"}<strong class="text-danger">￥{$pro.price*$pro.discount}</strong>{/if}
+        </h4>
+        <h5>{$pro.product_name}</h5>
+    </a>
+    {/volist}
+</div>
+{$product->render()}
+{/block}
+{block name='js'}
+<script src="/static/js/masonry-docs.min.js"></script>
+<script src="/static/js/product.js"></script>
+{/block}

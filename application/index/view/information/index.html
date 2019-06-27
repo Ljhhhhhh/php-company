@@ -1,0 +1,28 @@
+{extend name='common'/}
+{block name='css'}
+{/block}
+{block name='content'}
+<ul class="nav nav-pills" id="info-tabs">
+    <li role="presentation" ><a href="{:url('/information')}">全部</a></li>
+    {volist name='$category' id='cc'}
+    <li role="presentation" ><a href="{:url('/information_category',['id'=>$cc.category_id])}">{$cc.category_name}</a></li>
+    {/volist}
+</ul>
+<hr>
+{volist name='$information' id='vo'}
+<ul class="info_list">
+    <li>
+        <a href="{:url('/information_show',['id'=>$vo.id])}" class="row">
+            <div class="thumb col-sm-3 col-xs-12"><img src="/uploads/{$vo.thumb}"></div>
+            <h3 class="col-sm-9 col-xs-12">{$vo.title}</h3>
+            <p class="col-sm-9 col-xs-12">{$vo.abstract}</p>
+        </a>
+    </li>
+</ul>
+{/volist}
+{$information->render()}
+{/block}
+{block name='js'}
+<script src="/static/js/information.js"></script>
+{/block}
+<!--<span>{$vo.title}</span><em>{$vo.update_time|date='Y-m-d',###}</em>-->

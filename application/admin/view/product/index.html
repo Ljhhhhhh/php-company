@@ -1,0 +1,88 @@
+{include file='header,menu'}
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span>
+        产品管理
+        <span class="c-gray en">&gt;</span>
+        产品列表
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+				<span class="l">
+				<!--<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>-->
+				<a class="btn btn-primary radius" data-title="添加资讯" href="{:url('product/add')}"><i class="Hui-iconfont">&#xe600;</i> 添加产品</a>
+				</span>
+                <span class="r">共有产品：<strong>{$count}</strong> 款</span>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-bg table-hover table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="80">ID</th>
+                        <th width="120">名称</th>
+                        <th width="80">封面图</th>
+                        <th width="80">单价</th>
+                        <th width="80">折扣</th>
+                        <th>颜色</th>
+                        <th>外包材质</th>
+                        <th width="80">长度</th>
+                        <th width="80">软管直径</th>
+                        <th width="80">接头直径</th>
+                        <th width="80">状态</th>
+                        <th width="80">修改</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name='$product_list' id='vo'}
+                    <tr class="text-c">
+                        <td>{$vo.id}</td>
+                        <td>{$vo.product_name}</u></td>
+                        <td class="brand_list_img"><img src="/uploads/{$vo.picture}" alt=""></td>
+                        <td>￥{$vo.price}</td>
+                        <td>{$vo.discount}</td>
+                        <td>{$vo.color}</td>
+                        <td>{$vo.materials}</td>
+                        <td>{$vo.length}</td>
+                        <td>{$vo.diameter}</td>
+                        <td>{$vo.connector}</td>
+                        <td class="td-status"><a data-status="{$vo.status}" class="status_btn" href="{:url('product/status',['id'=>$vo.id])}">{$vo.status|productStatus}</a></td>
+                        <td class="f-14 td-manage">
+                            <a href="{:url('product/edit',['id'=>$vo.id])}" style="text-decoration:none" class="ml-5" title="编辑">
+                                <i class="Hui-iconfont">&#xe6df;</i>
+                            </a></td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+        {$product_list->render()}
+    </div>
+</section>
+{include file='footer'}
+
+<script>
+    $(function () {
+        $(".status_btn").click(function (e) {
+            e.preventDefault();
+            var _this=$(this);
+            var status=parseInt($(this).attr('data-status'));
+            var url=$(this).attr('href');
+            $.ajax({
+                type:'POST',
+                data:{
+                    'status':status
+                },
+                url:url,
+                success:function (e) {
+                    _this.attr('data-status',e.status);
+                    _this.html(e.str);
+                }
+            })
+        })
+    });
+</script>
+/*改状态，做编辑，组图上传*/

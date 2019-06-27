@@ -1,0 +1,149 @@
+{include file='header,menu'}
+<link rel="stylesheet" href="/lib/zyupload/zyupload/skins/zyupload-1.0.0.min.css " type="text/css">
+<article class="page-container">
+    <form class="form form-horizontal" id="form-article-add" action="{:url('product/doAdd')}" method="post" enctype='multipart/form-data'>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" name="product_name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>封面图：</label>
+            <div class="formControls col-xs-8 col-sm-9" id="uploadForm">
+                <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload">
+                    <div class="fileinput-new thumbnail" style="width: 200px;height: auto;max-height:150px;">
+                        <img id='picImg' style="width: 100%;height: auto;max-height: 140px;" src="/lib/fileinput/images/noimage.png" alt=""/>
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                    <div>
+                        <span class="btn btn-primary radius btn-file">
+                            <span class="fileinput-new">选择文件</span>
+                            <span class="fileinput-exists">换一张</span>
+                            <input type="file" name="picture" id="picID" accept="image/gif,image/jpeg,image/x-png"/>
+                        </span>
+                        <a href="javascript:;" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">移除</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>组图：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+            <div id="zyupload"></div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>价格：</label>
+            <div class="formControls col-xs-4 col-sm-1">
+                <input type="number" class="input-text" placeholder="" name="price">
+            </div>
+            <label class="form-label col-xs-4 col-sm-1">折扣：</label>
+            <div class="formControls col-xs-4 col-sm-1">
+                <input type="text" class="input-text" placeholder="" name="discount">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>状态：</label>
+            <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="status" class="select">
+                    <option value="0">下架</option>
+                    <option value="1">正常</option>
+                    <option value="2">推荐</option>
+				</select>
+				</span></div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>颜色：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="" name="color">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>外包材质：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="" name="materials">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">长度：</label>
+            <!-- TODO:: 修改数据库 -->
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="" name="length">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">软管直径：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="" name="diameter">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">接头类型：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="" name="connector">
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <button class="btn btn-primary radius" type="submit" id="bbb"><i class="Hui-iconfont">&#xe632;</i> 发布产品</button>
+                <a class="btn btn-default radius" type="button" href="{:url('information/index')}">&nbsp;&nbsp;取消&nbsp;&nbsp;</a>
+
+            </div>
+        </div>
+    </form>
+</article>
+{include file='footer'}
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/lib/fileinput/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/lib/fileinput/js/bootstrap-fileinput.js"></script>
+<script type="text/javascript" src="/lib/zyupload/zyupload/zyupload.basic-1.0.0.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // 初始化插件
+        $("#zyupload").zyUpload({
+            width: "100%",                 // 宽度
+            height: "auto",                 // 宽度
+            itemWidth: "140px",                 // 文件项的宽度
+            itemHeight: "115px",                 // 文件项的高度
+            url: "{:url('product/doAdd')}",              // 上传文件的路径
+            fileType: ["jpg", "png", "gif", "jpeg"],// 上传文件的类型
+            fileSize: 51200000,                // 上传文件的大小
+            multiple: true,                    // 是否可以多个文件上传
+            dragDrop: false,                   // 是否可以拖动上传文件
+            tailor: false,                   // 是否可以裁剪图片
+            del: true,                    // 是否可以删除文件
+            finishDel: false,  				  // 是否在上传文件完成后删除预览
+            /* 外部获得的回调接口 */
+            onSelect: function (selectFiles, allFiles) {    // 选择文件的回调方法  selectFile:当前选中的文件  allFiles:还没上传的全部文件
+                console.info("当前选择了以下文件：");
+                console.info(selectFiles);
+            },
+            onDelete: function (file, files) {              // 删除一个文件的回调方法 file:当前删除的文件  files:删除之后的文件
+                console.info("当前删除了此文件：");
+                console.info(file.name);
+            },
+            onSuccess: function (file, response) {          // 文件上传成功的回调方法
+                console.info("此文件上传成功：");
+                console.info(file.name);
+                console.info("此文件上传到服务器地址：");
+                console.info(response);
+                $("#uploadInf").append("<p>上传成功，文件地址是：" + response + "</p>");
+            },
+            onFailure: function (file, response) {          // 文件上传失败的回调方法
+                console.info("此文件上传失败：");
+                console.info(file.name);
+            },
+            onComplete: function (response) {           	  // 上传完成的回调方法
+                console.info("文件上传完成");
+                console.info(response);
+            }
+        });
+
+    });
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
